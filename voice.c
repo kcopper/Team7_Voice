@@ -3,5 +3,5 @@
 using namespace std;
 
 int main() {
-    VoiceIt myVoiceIt("API KEY GOES HERE");
+    VoiceIt myVoiceIt("908e399927154baab125a5c2c9dc36af");
 }
