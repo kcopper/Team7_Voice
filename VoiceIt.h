@@ -207,7 +207,7 @@ public:
 		cout<<"Parameters Initialized"<<endl;
 	}
 
-static size_t WriteCallback(char *contents, size_t size, size_t nmemb, void *userp)
+static size_t writeCallBack(char *contents, size_t size, size_t nmemb, void *userp)
 {
     size_t realsize = size * nmemb;
     readBuffer.append(contents, realsize);
@@ -222,7 +222,7 @@ struct WriteThis
   long sizeleft;
 };
 
-static size_t read_callback(void *ptr, size_t size, size_t nmemb, void *userp)
+static size_t readCallBack(void *ptr, size_t size, size_t nmemb, void *userp)
 {
   struct WriteThis *writeBuffer = (struct WriteThis *)userp;
 
@@ -257,7 +257,7 @@ string getUser(string email,string password)
     chunk = curl_slist_append(chunk, platformIdParam.c_str());
     curl_easy_setopt(curl, CURLOPT_URL, "https://siv.voiceprintportal.com/sivservice/api/users");
     res = curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeCallBack);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
     /* Perform the request, res will get the return code */
     res = curl_easy_perform(curl);
@@ -268,9 +268,10 @@ string getUser(string email,string password)
     /* always cleanup */
     curl_easy_cleanup(curl);
     //cout<<"Response is "<<readBuffer<<" For Sure"<<endl;
-    return readBuffer;
+
     /* free the custom headers */
     curl_slist_free_all(chunk);
+    return readBuffer;
   }
 }
 
@@ -298,7 +299,7 @@ string setUser(string email,string password,string firstName,string lastName)
     curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "PUT");
     curl_easy_setopt(curl, CURLOPT_URL, "https://siv.voiceprintportal.com/sivservice/api/users");
     res = curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeCallBack);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
     /* Perform the request, res will get the return code */
     res = curl_easy_perform(curl);
@@ -345,7 +346,7 @@ string createUser(string email,string password,string firstName,string lastName,
     curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "POST");
     curl_easy_setopt(curl, CURLOPT_URL, "https://siv.voiceprintportal.com/sivservice/api/users");
     res = curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeCallBack);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
     /* Perform the request, res will get the return code */
     res = curl_easy_perform(curl);
@@ -385,7 +386,7 @@ string deleteUser(string email,string password)
     curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "DELETE");
     curl_easy_setopt(curl, CURLOPT_URL, "https://siv.voiceprintportal.com/sivservice/api/users");
     res = curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeCallBack);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
     /* Perform the request, res will get the return code */
     res = curl_easy_perform(curl);
@@ -454,7 +455,7 @@ string createEnrollment(string email,string passwrd, string pathToEnrollmentWav,
     /* and give the size of the upload (optional) */
     //curl_easy_setopt(curl, CURLOPT_INFILESIZE_LARGE,(curl_off_t)file_info.st_size);
     res = curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeCallBack);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
     /* enable verbose for easier tracing */
     //curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
@@ -519,7 +520,7 @@ string createEnrollmentByWavURL(string email,string passwrd, string urlToEnrollm
     /* and give the size of the upload (optional) */
     //curl_easy_setopt(curl, CURLOPT_INFILESIZE_LARGE,(curl_off_t)file_info.st_size);
     res = curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeCallBack);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
     /* enable verbose for easier tracing */
     //curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
@@ -569,7 +570,7 @@ string getEnrollments(string email,string password)
     chunk = curl_slist_append(chunk, platformIdParam.c_str());
     curl_easy_setopt(curl, CURLOPT_URL, "https://siv.voiceprintportal.com/sivservice/api/enrollments");
     res = curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeCallBack);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
     /* Perform the request, res will get the return code */
     res = curl_easy_perform(curl);
@@ -580,9 +581,9 @@ string getEnrollments(string email,string password)
     /* always cleanup */
     curl_easy_cleanup(curl);
     //cout<<"Response is "<<readBuffer<<" For Sure"<<endl;
-    return readBuffer;
     /* free the custom headers */
     curl_slist_free_all(chunk);
+    return readBuffer;
   }
  return "Error";
 }
@@ -608,7 +609,7 @@ string deleteEnrollment(string email,string password,string enrollmentId)
     curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "DELETE");
     curl_easy_setopt(curl, CURLOPT_URL, finalURL.c_str());
     res = curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeCallBack);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
     /* Perform the request, res will get the return code */
     res = curl_easy_perform(curl);
@@ -679,7 +680,7 @@ string authentication(string email,string passwrd, string pathToAuthenticationWa
     /* and give the size of the upload (optional) */
     //curl_easy_setopt(curl, CURLOPT_INFILESIZE_LARGE,(curl_off_t)file_info.st_size);
     res = curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeCallBack);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
     /* enable verbose for easier tracing */
     //curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
@@ -746,7 +747,7 @@ string authenticationByWavURL(string email,string passwrd, string urlToAuthentic
     /* and give the size of the upload (optional) */
     //curl_easy_setopt(curl, CURLOPT_INFILESIZE_LARGE,(curl_off_t)file_info.st_size);
     res = curl_easy_setopt(curl, CURLOPT_HTTPHEADER, chunk);
-    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, WriteCallback);
+    curl_easy_setopt(curl, CURLOPT_WRITEFUNCTION, writeCallBack);
     curl_easy_setopt(curl, CURLOPT_WRITEDATA, &readBuffer);
     /* enable verbose for easier tracing */
     //curl_easy_setopt(curl, CURLOPT_VERBOSE, 1L);
