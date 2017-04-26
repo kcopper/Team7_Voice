@@ -14,7 +14,7 @@ void test_Obj_SHA256(){
 	//Object method tests
 
 }
-void test_Obj_VoiceIt
+void test_Obj_VoiceIt(){}
 void test_getUser(){}
 void test_setUser(){}
 void test_createUser(){}
