@@ -27,17 +27,37 @@ void test_Obj_VoiceIt(){
 	cout<<"Create User Test Invalid Email. "<<result<<endl;
 	result = myVoiceIt.createUser("test@email.com", "testing", "Test", "McTester");
 	cout<<"Create User Test Already Exists. "<<result<<endl;
-	result = myVoiceIt.createUser("test2@email.com", "testing2", "", "Testington");
+	result = myVoiceIt.createUser("test2@email.com", "testing2", "", "Burgundy");
 	cout<<"Create User Test No First. "<<result<<endl;
-	result = myVoiceIt.createUser("test2@email.com", "testing2", "Rusty", "");
+	result = myVoiceIt.createUser("test2@email.com", "testing2", "Ron", "");
 	cout<<"Create User Test No Last. "<<result<<endl;
 	//getUser
 	result = myVoiceIt.getUser("test@email.com", "testing");
-	cout<<"Get User Test Success"<<result<<endl;
+	cout<<"Get User Test Success. "<<result<<endl;
+	result = myVoiceIt.getUser("test2@email.com", "testing");
+	cout<<"Get User Test User Not Found."<<result<<endl;
+	result = myVoiceIt.getUser("email.com", "testing");
+	cout<<"Get User Test Invalid Email"<<result<<endl;
+	result = myVoiceIt.getUser("test@email.com", "test");
+	cout<<"Get User Test Incorrect Password"<<result<<endl;
 	//setUser
 	result = myVoiceIt.setUser("test@email.com", "testing", "Test", "McTester");
-	cout<<"Set User Test"<<result<<endl;
+	cout<<"Set User Test Success. "<<result<<endl;
+	result = myVoiceIt.setUser("email.com", "testing", "Test", "McTester");
+	cout<<"Set User Test Invalid Email. "<<result<<endl;
+	result = myVoiceIt.setUser("test@email.com", "test", "Test", "McTester");
+	cout<<"Set User Test Incorrect Password. "<<result<<endl;
+	result = myVoiceIt.setUser("test2@email.com", "tes", "Ron", "Burgundy");
+	cout<<"Set User Test User Not Found. "<<result<<endl;
 	//createEnrollment
+	result = myVoiceIt.createEnrollment("test@email.com", "testing", "TestPhraseWrong.wav", "en-US");
+	cout<<"Create Enrollment Test Wrong Phrase. "<<result<<endl;
+	result = myVoiceIt.createEnrollment("email.com", "testing", "TestPhraseEnroll1.wav", "en-US");
+	cout<<"Create Enrollment Test Invalid Email. "<<result<<endl;
+	result = myVoiceIt.createEnrollment("test@email.com", "test", "TestPhraseEnroll1.wav", "en-US");
+	cout<<"Create Enrollment Test Invalid Password. "<<result<<endl;
+	result = myVoiceIt.createEnrollment("test2@email.com", "testing2", "TestPhraseEnroll1.wav", "en-US");
+	cout<<"Create Enrollment Test User Not Found. "<<result<<endl;
 	cout<<"Authentication requires 3 valid enrollments"<<endl;
 	result = myVoiceIt.createEnrollment("test@email.com", "testing", "TestPhraseEnroll1.wav", "en-US");
 	cout<<"Create Enrollment1 Test Success. "<<result<<endl;
@@ -58,13 +78,25 @@ void test_Obj_VoiceIt(){
 	cout<<"Authentication Test Fail, too low. Confidence 90"<<result<<endl;
 	result = myVoiceIt.authentication("test@email.com", "testing", "TestPhraseHigh.wav", "90", "en-US");
 	cout<<"Authentication Test Fail, too high. Confidence 90"<<result<<endl;
+	result = myVoiceIt.authentication("test@email.com", "testing", "TestPhraseWrong.wav", "90", "en-US");
+	cout<<"Authentication Test Fail, Wrong Phrase. Confidence 90"<<result<<endl;
 	//deleteEnrollment
-
+	result = myVoiceIt.deleteEnrollment("email.com", "testing", num);
+	cout<<"Delete Enrollment Test Invalid Email. "<<result<<endl;
+	result = myVoiceIt.deleteEnrollment("test@email.com", "tes", num);
+	cout<<"Delete Enrollment Test Incorrect Password. "<<result<<endl;
+	result = myVoiceIt.deleteEnrollment("test@email.com", "testing", "127");
+	cout<<"Delete Enrollment Test ID Doesn't Exist. "<<result<<endl;
 	result = myVoiceIt.deleteEnrollment("test@email.com", "testing", num);
 	cout<<"Delete Enrollment Test Success. "<<result<<endl;
 	//deleteUser
+	result = myVoiceIt.deleteUser("email.com", "testing");
+	cout<<"Delete User Invalid Email. "<<result<<endl;
+	result = myVoiceIt.deleteUser("test@email.com", "test");
+	cout<<"Delete User Test Incorrect Password. "<<result<<endl;
 	result = myVoiceIt.deleteUser("test@email.com", "testing");
-	cout<<"Delete User Test"<<result<<endl;
+	cout<<"Delete User Test Success. "<<result<<endl;
+	cout<<"Testing Complete."<<endl;
 }
 
 int main(){
