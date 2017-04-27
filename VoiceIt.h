@@ -404,7 +404,7 @@ string deleteUser(string email,string password)
   return "";
 }
 
-string createEnrollment(string email,string passwrd, string pathToEnrollmentmpeg3, string contentLanguage){
+string createEnrollment(string email,string passwrd, string pathToEnrollmentWav, string contentLanguage){
   CURL *curl;
   CURLcode res;
   struct stat file_info;
@@ -416,11 +416,11 @@ string createEnrollment(string email,string passwrd, string pathToEnrollmentmpeg
   string devIdParam = "VsitDeveloperId: "+developerId;
   string contLangParam = "ContentLanguage: "+contentLanguage;
   string platformIdParam = "PlatformID: 11";
-  string cType = "Content-Type: audio/mpeg3";
+  string cType = "Content-Type: audio/wav";
   string accept = "Accept: application/json";
   readBuffer.clear();
 
-  fd = fopen(pathToEnrollmentmpeg3.c_str(), "rb"); /* open file to upload */
+  fd = fopen(pathToEnrollmentWav.c_str(), "rb"); /* open file to upload */
   if(!fd) {
 
     return "Error"; /* can't continue */
@@ -482,12 +482,12 @@ string createEnrollment(string email,string passwrd, string pathToEnrollmentmpeg
   return "";
 }
 
-string createEnrollment(string email,string passwrd, string pathToEnrollmentmpeg3){
+string createEnrollment(string email,string passwrd, string pathToEnrollmentWav){
 
-  return createEnrollment(email,passwrd, pathToEnrollmentmpeg3, "");
+  return createEnrollment(email,passwrd, pathToEnrollmentWav, "");
 }
 
-string createEnrollmentBympeg3URL(string email,string passwrd, string urlToEnrollmentmpeg3, string contentLanguage){
+string createEnrollmentByWavURL(string email,string passwrd, string urlToEnrollmentWav, string contentLanguage){
   CURL *curl;
   CURLcode res;
   //double speed_upload, total_time;
@@ -495,10 +495,10 @@ string createEnrollmentBympeg3URL(string email,string passwrd, string urlToEnrol
   string emailParam = "VsitEmail: "+email;
   string passParam =  "VsitPassword: "+sha256(passwrd);
   string devIdParam = "VsitDeveloperId: "+developerId;
-  string mpeg3URLParam = "Vsitmpeg3URL: "+urlToEnrollmentmpeg3;
+  string wavURLParam = "VsitWavURL: "+urlToEnrollmentWav;
   string contLangParam = "ContentLanguage: "+contentLanguage;
   string platformIdParam = "PlatformID: 11";
-  string cType = "Content-Type: audio/mpeg3";
+  string cType = "Content-Type: audio/wav";
   string accept = "Accept: application/json";
   readBuffer.clear();
   curl = curl_easy_init();
@@ -508,13 +508,13 @@ string createEnrollmentBympeg3URL(string email,string passwrd, string urlToEnrol
     chunk = curl_slist_append(chunk, emailParam.c_str());
     chunk = curl_slist_append(chunk, passParam.c_str());
     chunk = curl_slist_append(chunk, devIdParam.c_str());
-    chunk = curl_slist_append(chunk, mpeg3URLParam.c_str());
+    chunk = curl_slist_append(chunk, wavURLParam.c_str());
     chunk = curl_slist_append(chunk, contLangParam.c_str());
     chunk = curl_slist_append(chunk, platformIdParam.c_str());
     chunk = curl_slist_append(chunk, cType.c_str());
     chunk = curl_slist_append(chunk, accept.c_str());
     curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "POST");
-    curl_easy_setopt(curl, CURLOPT_URL, "https://siv.voiceprintportal.com/sivservice/api/enrollments/bympeg3url");
+    curl_easy_setopt(curl, CURLOPT_URL, "https://siv.voiceprintportal.com/sivservice/api/enrollments/bywavurl");
 
 
     /* and give the size of the upload (optional) */
@@ -547,9 +547,9 @@ string createEnrollmentBympeg3URL(string email,string passwrd, string urlToEnrol
   return "";
 }
 
-string createEnrollmentBympeg3URL(string email,string passwrd, string urlToEnrollmentmpeg3){
+string createEnrollmentByWavURL(string email,string passwrd, string urlToEnrollmentWav){
 
-  return createEnrollmentBympeg3URL(email,passwrd, urlToEnrollmentmpeg3, "");
+  return createEnrollmentByWavURL(email,passwrd, urlToEnrollmentWav, "");
 }
 
 string getEnrollments(string email,string password)
@@ -627,7 +627,7 @@ string deleteEnrollment(string email,string password,string enrollmentId)
   return "";
 }
 
-string authentication(string email,string passwrd, string pathToAuthenticationmpeg3, string confidence, string contentLanguage){
+string authentication(string email,string passwrd, string pathToAuthenticationWav, string confidence, string contentLanguage){
   CURL *curl;
   CURLcode res;
   struct stat file_info;
@@ -640,11 +640,11 @@ string authentication(string email,string passwrd, string pathToAuthenticationmp
   string confidenceParam = "VsitConfidence: "+confidence;
   string contLangParam = "ContentLanguage: "+contentLanguage;
   string platformIdParam = "PlatformID: 11";
-  string cType = "Content-Type: audio/mpeg3";
+  string cType = "Content-Type: audio/wav";
   string accept = "Accept: application/json";
   readBuffer.clear();
 
-  fd = fopen(pathToAuthenticationmpeg3.c_str(), "rb"); /* open file to upload */
+  fd = fopen(pathToAuthenticationWav.c_str(), "rb"); /* open file to upload */
   if(!fd) {
 
     return "Error"; /* can't continue */
@@ -707,12 +707,12 @@ string authentication(string email,string passwrd, string pathToAuthenticationmp
   return "";
 }
 
-string authentication(string email,string passwrd, string pathToAuthenticationmpeg3, string confidence){
+string authentication(string email,string passwrd, string pathToAuthenticationWav, string confidence){
 
-  return authentication(email,passwrd,pathToAuthenticationmpeg3,confidence,"");
+  return authentication(email,passwrd,pathToAuthenticationWav,confidence,"");
 }
 
-string authenticationBympeg3URL(string email,string passwrd, string urlToAuthenticationmpeg3, string confidence, string contentLanguage){
+string authenticationByWavURL(string email,string passwrd, string urlToAuthenticationWav, string confidence, string contentLanguage){
   CURL *curl;
   CURLcode res;
   //double speed_upload, total_time;
@@ -722,9 +722,9 @@ string authenticationBympeg3URL(string email,string passwrd, string urlToAuthent
   string devIdParam = "VsitDeveloperId: "+developerId;
   string confidenceParam = "VsitConfidence: "+confidence;
   string contLangParam = "ContentLanguage: "+contentLanguage;
-  string mpeg3URLParam = "Vsitmpeg3URL: "+urlToAuthenticationmpeg3;
+  string wavURLParam = "VsitWavURL: "+urlToAuthenticationWav;
   string platformIdParam = "PlatformID: 11";
-  string cType = "Content-Type: audio/mpeg3";
+  string cType = "Content-Type: audio/wav";
   string accept = "Accept: application/json";
   readBuffer.clear();
   curl = curl_easy_init();
@@ -735,13 +735,13 @@ string authenticationBympeg3URL(string email,string passwrd, string urlToAuthent
     chunk = curl_slist_append(chunk, passParam.c_str());
     chunk = curl_slist_append(chunk, devIdParam.c_str());
     chunk = curl_slist_append(chunk, confidenceParam.c_str());
-    chunk = curl_slist_append(chunk, mpeg3URLParam.c_str());
+    chunk = curl_slist_append(chunk, wavURLParam.c_str());
     chunk = curl_slist_append(chunk, contLangParam.c_str());
     chunk = curl_slist_append(chunk, platformIdParam.c_str());
     chunk = curl_slist_append(chunk, cType.c_str());
     chunk = curl_slist_append(chunk, accept.c_str());
     curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, "POST");
-    curl_easy_setopt(curl, CURLOPT_URL, "https://siv.voiceprintportal.com/sivservice/api/authentications/bympeg3url");
+    curl_easy_setopt(curl, CURLOPT_URL, "https://siv.voiceprintportal.com/sivservice/api/authentications/bywavurl");
 
 
     /* and give the size of the upload (optional) */
@@ -774,8 +774,8 @@ string authenticationBympeg3URL(string email,string passwrd, string urlToAuthent
   return "";
 }
 
-string authenticationBympeg3URL(string email,string passwrd, string urlToAuthenticationmpeg3, string confidence){
-  return authenticationBympeg3URL(email,passwrd,urlToAuthenticationmpeg3,confidence,"");
+string authenticationByWavURL(string email,string passwrd, string urlToAuthenticationWav, string confidence){
+  return authenticationByWavURL(email,passwrd,urlToAuthenticationWav,confidence,"");
 }
   };
 
