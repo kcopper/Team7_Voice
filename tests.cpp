@@ -71,6 +71,10 @@ void test_Obj_VoiceIt(){
 	size_t start = result.find("[") + 1;
 	size_t end = 7;
 	string num = result.substr(start, end);
+	result = myVoiceIt.getEnrollments("email.com", "testing");
+	cout<<"Get Enrollment Invalid Email. "<<result<<endl;
+	result = myVoiceIt.getEnrollments("test@email.com", "tes");
+	cout<<"Get Enrollment Incorrect Password. "<<result<<endl;
 	//authentication
 	result = myVoiceIt.authentication("test@email.com", "testing", "TestPhraseAuth.wav", "90", "en-US");
 	cout<<"Authentication Test Success. Confidence 90 "<<result<<endl;
@@ -80,6 +84,8 @@ void test_Obj_VoiceIt(){
 	cout<<"Authentication Test Fail, too high. Confidence 90"<<result<<endl;
 	result = myVoiceIt.authentication("test@email.com", "testing", "TestPhraseWrong.wav", "90", "en-US");
 	cout<<"Authentication Test Fail, Wrong Phrase. Confidence 90"<<result<<endl;
+	result = myVoiceIt.authentication("test@email.com", "testing", "TestPhraseAuth.wav", "90", "en-US");
+	cout<<"Authentication Test Lockout. Confidence 90 "<<result<<endl;
 	//deleteEnrollment
 	result = myVoiceIt.deleteEnrollment("email.com", "testing", num);
 	cout<<"Delete Enrollment Test Invalid Email. "<<result<<endl;
